@@ -4,9 +4,9 @@ import java.io.{BufferedReader, InputStreamReader, PrintWriter, File}
 import java.net.{URL, URLConnection}
 
 object Google_ReadCSVFromWebQuery1 {
-  //val stocks = List("MCD", "CL", "ORCL", "WFC", "COST")
+  val stocks = List("MCD", "CL", "ORCL", "WFC", "COST")
   // Costco is missing 1 April, 2016... Forget it...
-  val stocks = List("MCD", "CL", "ORCL", "WFC")
+  //val stocks = List("MCD", "CL", "ORCL", "WFC")
   val template = "http://www.google.com/finance/historical?q=TICKER&histperiod=daily&startdate=Jan+1+2010&enddate=Jan+1+2017&output=csv"
 
   def getTickerInfo(ticker: String): List[String] = {
