@@ -41,7 +41,7 @@ spec.pgram(stocks)
 n_train <- N - 225
 #n_train <- N - 300
 add <- 1000
-mod <- dlmModPoly(2, dV=10, dW=c(1,1)*1E-6, m0=c(40,0), C0=var(stocks[,1])*diag(2)) +
+mod <- dlmModPoly(2, dV=10, dW=c(1,1)*1E-6, m0=c(40,0), C0=var(stocks[,1])*diag(2)) #+
        dlmModARMA(ar=c(.95,.04))
        #dlmModARMA(ar=c(.9468, .0514))
 
@@ -76,6 +76,6 @@ lines((n_train+1):(N+add), fc$f, col='red', lwd=1, lty=2)
 Q <- unlist(fc$Q)
 #color.btwn((n_train+1):N, fc$f-sqrt(Q)*qt(.975, n_train-1), fc$f+sqrt(Q)*qt(.975, n_train-1), from=n_train+1, N,
 #           col.area=rgb(1,0,0,.3))
-color.btwn((n_train+1):(N+add), fc$f-sqrt(Q)*qt(.975, n_train-1), fc$f+sqrt(Q)*qt(.975, n_train-1), from=n_train+1, N+add,
+color.btwn((n_train+1):(N+add), fc$f-sqrt(Q)*qnorm(.975), fc$f+sqrt(Q)*qnorm(.975), from=n_train+1, N+add,
            col.area=rgb(1,0,0,.3))
 
