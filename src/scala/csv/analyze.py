@@ -27,13 +27,13 @@ plt.show()
 
 
 ### Create DLM Object ###
-dlm = dlm_mod.poly(1, V=10) #+ dlm_mod.arma(ar=[.95,.04], V=0)
-p = #sum(dlm.__dimension__)
+dlm = dlm_mod.poly(1, W=np.eye(2)*1E-6, V=1) + dlm_mod.arma(ar=[.95,.04], V=0)
+p = np.array(dlm.__dimension__).sum()
 
 # Initialize DLM
 init = param.uni_df(
         m=np.asmatrix(np.zeros((p,1))), 
-        C=np.eye(p))
+        C=np.eye(p)*100)
 
 ### Feed data to Kalman-filter ###
 filt = dlm.filter(y[:n_train], init)
@@ -46,7 +46,7 @@ one_step_n = map(lambda x: x.n, filt)
 ci_one_step = dlm.get_ci(one_step_f, one_step_Q, one_step_n)
 
 ### Forecasts ###
-fc = dlm.forecast(filt, n_ahead, linear_decay=False)
+fc = dlm.forecast(filt, n_ahead)
 future_idx = np.linspace(n_train+1, n_train+n_ahead, n_ahead)
 fc_f = fc['f']
 fc_Q = fc['Q']
@@ -71,4 +71,5 @@ def plot_result():
     plt.show()
     #plt.savefig('img/quad.png')
 
+print dlm
 plot_result()

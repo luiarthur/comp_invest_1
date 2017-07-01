@@ -41,8 +41,8 @@ spec.pgram(stocks)
 n_train <- N - 225
 #n_train <- N - 300
 add <- 1000
-mod <- dlmModPoly(2, dV=10, dW=c(1,1)*1E-6, m0=c(40,0), C0=var(stocks[,1])*diag(2)) #+
-       dlmModARMA(ar=c(.95,.04))
+mod <- dlmModPoly(2, dV=1, dW=c(1,1)*1E-6, m0=c(0,0), C0=diag(2)*100) +
+       dlmModARMA(ar=c(.95,.04), C0=diag(2)*100)
        #dlmModARMA(ar=c(.9468, .0514))
 
 j <- 4
