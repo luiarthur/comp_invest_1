@@ -27,7 +27,13 @@ plt.show()
 
 
 ### Create DLM Object ###
-dlm = dlm_mod.poly(1, W=np.eye(2)*1E-6, V=1) + dlm_mod.arma(ar=[.95,.04], V=0)
+#dlm = dlm_mod.poly(1, W=np.eye(2)*1E-6, V=1) + dlm_mod.arma(ar=[.95,.04], V=0)
+#dlm = dlm_mod.poly(1, discount=.95) + dlm_mod.arma(ar=[.95,.04])
+#dlm = dlm_mod.poly(1, discount=.98, V=0) + dlm_mod.arma(ar=[.95, .04],V=0)
+#dlm = dlm_mod.arma(ar=[.996], V=0)
+#dlm = dlm_mod.poly(1, discount=.95, V=0) + dlm_mod.arma(ar=[.99], V=0)
+dlm = dlm_mod.poly(1, discount=.995, V=0) + dlm_mod.arma(ar=[.99], V=0)
+
 p = np.array(dlm.__dimension__).sum()
 
 # Initialize DLM
@@ -46,7 +52,7 @@ one_step_n = map(lambda x: x.n, filt)
 ci_one_step = dlm.get_ci(one_step_f, one_step_Q, one_step_n)
 
 ### Forecasts ###
-fc = dlm.forecast(filt, n_ahead)
+fc = dlm.forecast(filt, n_ahead, linear_decay=True)
 future_idx = np.linspace(n_train+1, n_train+n_ahead, n_ahead)
 fc_f = fc['f']
 fc_Q = fc['Q']
