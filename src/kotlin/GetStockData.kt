@@ -34,7 +34,7 @@ object App {
     return loop(emptyList<String>())
   }
 
-  fun main(args: Array<String>) {
+  @JvmStatic fun main(args: Array<String>) {
     val dir = "csv/"
     stocks.forEach{ticker -> run {
       val pw = PrintWriter(File(dir + ticker + ".csv" ))
@@ -56,3 +56,8 @@ object App {
 //  out
 //}
 
+// compile: kotlinc -d GetStockData.jar GetStockData.kt
+// run: kotlin -cp GetStockData.jar App
+// Or:
+// compile: kotlinc -include-runtime -d GetStockData.jar GetStockData.kt
+// compile: java -cp GetStockData.jar App
