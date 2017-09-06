@@ -32,7 +32,7 @@ object Google_ReadCSVFromWebQuery1 {
   def main(args: Array[String]) {
     val stocks = args.toList
     val dir = "csv/"
-    stocks.foreach(ticker => {
+    stocks.par.foreach(ticker => {
       val pw = new PrintWriter(new File(dir + ticker + ".csv" ))
       val lines = getTickerInfo(ticker)
       //lines.foreach(line => pw.write(line + "\n"))
