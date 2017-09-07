@@ -4,3 +4,4 @@ ORCL
 WFC
 COST
 SPY
+FB
