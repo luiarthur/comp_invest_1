@@ -2,12 +2,21 @@ library(dlm)
 library(rcommon)
 
 ### TODO
-#files <- Filter(function(x) grepl("csv", x), list.files())
-#tickers <- lapply(files, read.csv)
-#names(tickers) <- files
-#dates <- Reduce(function(a,b) intersect(a,b), lapply(tickers, function(x) x$Date))
+files <- Filter(function(x) grepl("csv", x), list.files())
+tickers_tmp <- lapply(files, read.csv)
+names(tickers_tmp) <- gsub(".csv", "", files)
+dates <- Reduce(function(a,b) intersect(a,b), lapply(tickers_tmp, function(x) x$Date))
 # NEXT: Just keep the data that take place on those dates
 
+tickers <- lapply(tickers_tmp, function(ticker) {
+  idx <- sapply(dates, function(d) which(ticker$Date == d))
+  ticker[idx, ]
+})
+
+### Assert that all dates match
+stopifnot(all(apply(sapply(tickers, function(t) t$Date), 1, function(row) length(unique(row)) == 1 )))
+
+#####################################################################################################
 
 wf <- read.csv("WFC.csv")
 cl <- read.csv("CL.csv")
