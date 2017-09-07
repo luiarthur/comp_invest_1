@@ -1,6 +1,13 @@
 library(dlm)
 library(rcommon)
 
+### TODO
+#files <- Filter(function(x) grepl("csv", x), list.files())
+#tickers <- lapply(files, read.csv)
+#names(tickers) <- files
+#dates <- Reduce(function(a,b) intersect(a,b), lapply(tickers, function(x) x$Date))
+# NEXT: Just keep the data that take place on those dates
+
 
 wf <- read.csv("WFC.csv")
 cl <- read.csv("CL.csv")
@@ -15,6 +22,7 @@ dim(or)
 dim(mc)
 
 missing_date <- setdiff(as.character(cl$Date), as.character(co$Date))
+
 
 plot(co$Close, type='l', main='Costco')
 idx <- which(co$Date == "31-Mar-10")

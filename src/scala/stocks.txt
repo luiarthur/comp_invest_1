@@ -3,3 +3,4 @@ CL
 ORCL
 WFC
 COST
+SPY
