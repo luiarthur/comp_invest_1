@@ -1,6 +1,10 @@
 library(dlm)
 library(rcommon)
 
+daily_return <- function(x) {
+  diff(x) / x[-length(x)] - 1
+}
+
 ### Read Data and preprocess
 files <- Filter(function(x) grepl("csv", x), list.files())
 tickers_tmp <- lapply(files, read.csv)
@@ -33,6 +37,19 @@ my.pairs(stocks, customDiag=function(i,X) {
 ### Stats
 var(stocks)
 mean(stocks)
+
+### Daily Returns
+d_ret <- apply(stocks, 2, daily_return)
+my.pairs(d_ret)
+
+par(mfrow=c(4,2), oma=oma.ts(), mar=mar.ts())
+for(j in 1:ncol(d_ret)) {
+  plot(d_ret[,"SPY"], d_ret[,j], ylab=colnames(d_ret)[j])
+  abline(mod <- lm(d_ret[,j] ~ d_ret[,'SPY']) )
+  legend('topleft', legend=c(paste('alpha =', round(mod$coef[1],2)), 
+                             paste('beta =',  round(mod$coef[2],2))), bg='white')
+}
+par(mfrow=c(1,1), oma=oma.default(), mar=mar.default())
 
 ### DLM Analysis ###
 
