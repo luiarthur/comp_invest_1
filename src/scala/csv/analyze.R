@@ -42,9 +42,11 @@ mean(stocks)
 d_ret <- apply(stocks, 2, daily_return)
 my.pairs(d_ret)
 
-par(mfrow=c(4,2), oma=oma.ts(), mar=mar.ts())
-for(j in 1:ncol(d_ret)) {
-  plot(d_ret[,"SPY"], d_ret[,j], ylab=colnames(d_ret)[j])
+K <- ncol(d_ret) # num stocks
+par(mfrow=c(K/2,2), oma=oma.ts(), mar=mar.ts())
+for(j in 1:K) {
+  plot(d_ret[,"SPY"], d_ret[,j], ylab=colnames(d_ret)[j],
+       xaxt=ifelse(j<K-1,'n','s'), pch=19, col=rgb(0,0,1,.5))
   abline(mod <- lm(d_ret[,j] ~ d_ret[,'SPY']) )
   legend('topleft', legend=c(paste('alpha =', round(mod$coef[1],2)), 
                              paste('beta =',  round(mod$coef[2],2))), bg='white')
